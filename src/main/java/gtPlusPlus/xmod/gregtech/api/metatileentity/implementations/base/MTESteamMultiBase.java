@@ -204,8 +204,11 @@ public abstract class MTESteamMultiBase<T extends MTESteamMultiBase<T>> extends 
         } else if (aMetaTileEntity instanceof MTEHatchSteamBusOutput) {
             log("Adding Steam Output Bus");
             aDidAdd = addToMachineListInternal(mSteamOutputs, aMetaTileEntity, aBaseCasingIndex);
-        } else if (aMetaTileEntity instanceof MTEHatchInput)
+        } else if (aMetaTileEntity instanceof MTEHatchInput) {
             aDidAdd = addToMachineListInternal(mInputHatches, aMetaTileEntity, aBaseCasingIndex);
+        } else if (aMetaTileEntity instanceof MTEHatchOutput) {
+            aDidAdd = addToMachineListInternal(mOutputHatches, aMetaTileEntity, aBaseCasingIndex);
+        }
 
         return aDidAdd;
     }
