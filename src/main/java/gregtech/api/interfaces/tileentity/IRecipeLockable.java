@@ -20,7 +20,7 @@ public interface IRecipeLockable extends RecipeMapWorkable {
     void setRecipeLocking(boolean enabled);
 
     default boolean getDefaultRecipeLockingMode() {
-        return false;
+        return true;
     }
 
     default SingleRecipeCheck getSingleRecipeCheck() {
