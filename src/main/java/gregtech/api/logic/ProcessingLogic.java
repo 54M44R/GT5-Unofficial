@@ -401,13 +401,14 @@ public class ProcessingLogic {
             SingleRecipeCheck singleRecipeCheck = recipeLockableMachine.getSingleRecipeCheck();
             // Validate recipe here, otherwise machine will show "not enough output space"
             // even if recipe cannot be found
-            if (singleRecipeCheck.checkRecipeInputs(false, 1, inputItems, inputFluids) == 0) {
-                return CheckRecipeResultRegistry.NO_RECIPE;
+            if (singleRecipeCheck.checkRecipeInputs(false, 1, inputItems, inputFluids) != 0) {
+                return validateAndCalculateRecipe(
+                    recipeLockableMachine.getSingleRecipeCheck()
+                        .getRecipe()).checkRecipeResult;
             }
-
-            return validateAndCalculateRecipe(
-                recipeLockableMachine.getSingleRecipeCheck()
-                    .getRecipe()).checkRecipeResult;
+            // The current recipe is not the same as the last recipe
+            // Clear SingleRecipeCheck to replace with a new instance
+            recipeLockableMachine.setSingleRecipeCheck(null);
         }
         Stream<GTRecipe> matchedRecipes = findRecipeMatches(recipeMap);
         Iterable<GTRecipe> recipeIterable = matchedRecipes::iterator;
